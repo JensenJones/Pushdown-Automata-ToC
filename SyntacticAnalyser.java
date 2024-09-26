@@ -1,9 +1,4 @@
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SyntacticAnalyser {
 
@@ -38,6 +33,7 @@ public class SyntacticAnalyser {
 }
 
 // The following class may be helpful.
+
 
 class Pair<A, B> {
 	private final A a;

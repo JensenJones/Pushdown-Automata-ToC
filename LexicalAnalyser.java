@@ -145,6 +145,16 @@ public class LexicalAnalyser {
 			return Optional.of(Token.TokenType.TRUE);
 		case "false":
 			return Optional.of(Token.TokenType.FALSE);
+		case "!=":
+			return Optional.of(Token.TokenType.NEQUAL);
+		case "<":
+			return Optional.of(Token.TokenType.LT);
+		case "<=":
+			return Optional.of(Token.TokenType.LE);
+		case ">":
+			return Optional.of(Token.TokenType.GT);
+		case ">=":
+			return Optional.of(Token.TokenType.GE);
 		}
 
 		if (t.matches("\\d+"))
