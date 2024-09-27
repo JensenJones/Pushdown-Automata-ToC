@@ -4,25 +4,26 @@ public class SyntacticAnalyser {
 
 	public static ParseTree parse(List<Token> tokens) throws SyntaxException {
 
-		var tree = new ParseTree();
-		var stack = new ArrayDeque<Pair<Symbol, TreeNode>>();
+		ParsingTable parsingTable = new ParsingTable();
+		ParseTree tree = new ParseTree();
+		Deque<Pair<Symbol, TreeNode>> stack = new ArrayDeque<>();
 
 		stack.push(new Pair<> (TreeNode.Label.prog,null));
 
-		var position = 0;
+		int position = 0;
 
 		while (!stack.isEmpty() && position < tokens.size()) {
-			var s = stack.pop();
-			var newNode = new TreeNode(getLabel(s.fst()), tokens.get(position), s.snd());
-			applyRule(s.fst(), tokens.get(position), stack, newNode);
+			Pair current = stack.pop();
+			TreeNode newNode = new TreeNode(getLabel(current.fst()), tokens.get(position), current.snd());
+			applyRule(current.fst(), tokens.get(position), stack, newNode);
 
-			if (s.snd() == null){
+			if (current.snd() == null){
 				tree.setRoot(newNode);
 			} else {
-				s.snd().addChild(newNode);
+				current.snd().addChild(newNode);
 			}
 
-			if (!s.fst().isVariable()){
+			if (!current.fst().isVariable()){
 				position ++;
 			}
 		}
