@@ -1,36 +1,35 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 class ParsingTable {
-    private final Map<String, List<List<Token>>> parsingTable = new HashMap<>();
+    private final Map<Pair<TreeNode, Token>, List<TreeNode>> parsingTable = new HashMap<>();
 
-    // I think a good approach would be to have this class have the entire parsing table
-    // Each non-terminal symbol would be the key for the hash table which would give a list of the possible
-    // rules (each object in the list being a list of tokens) e.g. for "bool op" it would be like (arrows around the tokens):
-    // [[<<bool eq>>], [<<bool log>>]]
-    // then the apply rule method searches for what rule is for the read token and applies it
+    // Key:
+    // Value:
 
     public ParsingTable() {
-        ArrayList<List<Token>> progRuleList = new ArrayList<>();
-        ArrayList<Token> progRule = new ArrayList<>();
-        progRule.add(new Token(Token.TokenType.PUBLIC, "public"));
-        parsingTable.put("prog", progRuleList);
+        TreeNode progNode = new TreeNode(TreeNode.Label.prog, null);
+        List<TreeNode> progRuleA = Arrays.asList(new TreeNode(TreeNode.Label.valueOf("public"), new Token(Token.TokenType.PUBLIC), progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("class"), new Token(Token.TokenType.CLASS) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("ID"), new Token(Token.TokenType.ID) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("{"), new Token(Token.TokenType.LBRACE) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("public"), new Token(Token.TokenType.PUBLIC), progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("static"), new Token(Token.TokenType.STATIC) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("void"), new Token(Token.TokenType.VOID) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("main"), new Token(Token.TokenType.MAIN) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("("), new Token(Token.TokenType.LPAREN) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("string[]"), new Token(Token.TokenType.STRINGARR) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("args"), new Token(Token.TokenType.ARGS) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("{"), new Token(Token.TokenType.LBRACE) ,progNode),
+                                                 new TreeNode(TreeNode.Label.los, progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("}"), new Token(Token.TokenType.RBRACE) ,progNode),
+                                                 new TreeNode(TreeNode.Label.valueOf("}"), new Token(Token.TokenType.RBRACE) ,progNode));
+        parsingTable.put(new Pair<>(progNode, new Token(Token.TokenType.PUBLIC)), progRuleA);
     }
 
     /*
      * Returns the production rule or null
      */
-    public List<Token> applyRule(String topOfStack, Token input) {
-        List<List<Token>> productionRules = parsingTable.get(topOfStack);
-        for (List<Token> rule : productionRules) {
-            for (Token token : rule) {
-                if (token.equals(input)) {
-                    return rule;
-                }
-            }
-        }
-        return null;
+    public List<TreeNode> applyRule(Pair<TreeNode, Token> key) {
+        return parsingTable.get(key);
     }
 }
