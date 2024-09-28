@@ -13,17 +13,17 @@ public class SyntacticAnalyser {
 		int position = 0;
 
 		while (!stack.isEmpty() && position < tokens.size()) {
-			Pair current = stack.pop();
-			TreeNode newNode = new TreeNode(getLabel(current.fst()), tokens.get(position), current.snd());
-			applyRule(current.fst(), tokens.get(position), stack, newNode);
+			Pair topOfStack = stack.pop();
+			TreeNode newNode = new TreeNode(getLabel(topOfStack.fst()), tokens.get(position), topOfStack.snd());
+			applyRule(topOfStack.fst(), tokens.get(position), stack, newNode);
 
-			if (current.snd() == null){
+			if (topOfStack.snd() == null){
 				tree.setRoot(newNode);
 			} else {
-				current.snd().addChild(newNode);
+				topOfStack.snd().addChild(newNode);
 			}
 
-			if (!current.fst().isVariable()){
+			if (!topOfStack.fst().isVariable()){
 				position ++;
 			}
 		}
