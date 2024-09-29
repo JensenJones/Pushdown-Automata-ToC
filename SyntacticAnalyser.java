@@ -6,36 +6,70 @@ public class SyntacticAnalyser {
 
 		ParsingTable parsingTable = new ParsingTable();
 		ParseTree tree = new ParseTree();
-		Deque<TreeNode> stack = new ArrayDeque<>();
+		Deque<Pair<Symbol, TreeNode>> stack = new ArrayDeque<>();
 
-		stack.push(new TreeNode(TreeNode.Label.prog, null));
+		stack.push(new Pair<>(TreeNode.Label.prog, null));
 
 		int position = 0;
 
 		while (!stack.isEmpty() && position < tokens.size()) {
-			TreeNode topOfStack = stack.pop();
-			TreeNode newNode = new TreeNode(topOfStack.getLabel(), tokens.get(position), topOfStack.snd());
-			//applyRule(topOfStack.fst(), tokens.get(position), stack, newNode);
+			Pair<Symbol, TreeNode> topOfStack = stack.pop();
 
-			if (topOfStack.getParent() == null){
-				tree.setRoot(newNode);
-			} else {
-				if (topOfStack.getLabel().equals(TreeNode.Label.terminal)) {
-					position ++; // Move position to next input
-				} else {
-					List<TreeNode> producedRule = parsingTable.applyRule(new Pair<>(topOfStack, tokens.get(position)));
-					ListIterator<TreeNode> iterator = producedRule.listIterator(producedRule.size());
-					while (iterator.hasPrevious()) {
-						TreeNode current = new TreeNode(iterator.previous().getLabel(), topOfStack);
-						topOfStack.addChild(current);
-						stack.push(current);
-					}
-				}
-				stack.pop();
-			}
+			determineAction(tokens.get(position), topOfStack, tree, parsingTable, stack);
+
+			position++;
 		}
 
 		return new ParseTree();
+	}
+
+	private static TreeNode.Label getLabel(Symbol fst) {
+		try {
+			return TreeNode.Label.valueOf(fst.toString());
+		} catch (IllegalArgumentException e) {
+			return TreeNode.Label.terminal;
+		}
+	}
+
+	private static void determineAction(Token currentToken,
+                                        Pair<Symbol, TreeNode> topOfStack,
+                                        ParseTree tree,
+                                        ParsingTable parsingTable,
+                                        Deque<Pair<Symbol, TreeNode>> stack) throws Error{
+		TreeNode newNode = new TreeNode(getLabel(topOfStack.fst()), currentToken, topOfStack.snd());
+
+		if (topOfStack.snd() == null){
+			tree.setRoot(newNode);
+		} else {
+			topOfStack.snd().addChild(newNode);
+		}
+		if (topOfStack.fst().equals(TreeNode.Label.terminal)) {
+			if (topOfStack.fst() != currentToken.getType()) {
+				System.out.println("Top of stack = " + topOfStack.fst()); // for debugging
+				System.out.println("Current input token = " + currentToken.getType()); // for debugging
+			}
+		} else {
+			List<Pair<Symbol, Token.TokenType>> producedRule = parsingTable.applyRule(new Pair<>(topOfStack.fst(), currentToken.getType()));
+			if (producedRule == null) {
+				System.out.println("Produced empty rule for:" + topOfStack.fst() + currentToken.getType()); // for debugging
+				return;
+			}
+
+			ListIterator<Pair<Symbol, Token.TokenType>> iterator = producedRule.listIterator(producedRule.size());
+			while (iterator.hasPrevious()) {
+				Pair<Symbol, Token.TokenType> current = iterator.previous();
+				TreeNode newNodeChild = new TreeNode(getLabel(current.fst()), new Token(current.snd()), newNode);
+				newNode.addChild(newNodeChild); // Might be redundant
+				stack.push(new Pair<>(getSymbol(current), newNode));
+			}
+		}
+	}
+
+	private static Symbol getSymbol(Pair<Symbol, Token.TokenType> current) {
+		if (current.snd() == null) {
+			return current.fst();
+		}
+		return current.snd();
 	}
 }
 
