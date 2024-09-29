@@ -24,6 +24,7 @@ class ParsingTable {
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE)
         );
+        parsingTable.put(new Pair<>(TreeNode.Label.prog, Token.TokenType.PUBLIC), progRuleA);
     }
 
     public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
