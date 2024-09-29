@@ -20,7 +20,7 @@ public class SyntacticAnalyser {
 			position++;
 		}
 
-		return new ParseTree();
+		return tree;
 	}
 
 	private static TreeNode.Label getLabel(Symbol fst) {
@@ -59,7 +59,6 @@ public class SyntacticAnalyser {
 			while (iterator.hasPrevious()) {
 				Pair<Symbol, Token.TokenType> current = iterator.previous();
 				TreeNode newNodeChild = new TreeNode(getLabel(current.fst()), new Token(current.snd()), newNode);
-				newNode.addChild(newNodeChild); // Might be redundant
 				stack.push(new Pair<>(getSymbol(current), newNode));
 			}
 		}
