@@ -86,6 +86,36 @@ class ParsingTable {
                 TreeNode.Label.assign, null)));
         parsingTable.put(new Pair<>(TreeNode.Label.forstart, Token.TokenType.SEMICOLON), Collections.singletonList(new Pair<>(
                 TreeNode.Label.epsilon, null)));
+
+
+        List<Pair<Symbol, Token.TokenType>> forArithRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.arithexpr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.forarith, Token.TokenType.ID), forArithRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.forarith, Token.TokenType.NUM), forArithRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.forarith, Token.TokenType.LPAREN), forArithRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.forarith, Token.TokenType.RPAREN), Collections.singletonList(
+                new Pair<>(TreeNode.Label.epsilon, null)));
+
+
+        parsingTable.put(new Pair<>(TreeNode.Label.forstat, Token.TokenType.FOR), Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.IF),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
+                new Pair<>(TreeNode.Label.relexpr, null),
+                new Pair<>(TreeNode.Label.boolexpr, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
+                new Pair<>(TreeNode.Label.los, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE),
+                new Pair<>(TreeNode.Label.elseifstat, null)));
+
+        List<Pair<Symbol, Token.TokenType>> elseIfRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.ID), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.IF), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.FOR), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.WHILE), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.PRINT), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.TYPE), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.SEMICOLON), elseIfRuleA);
+
     }
 
     public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
