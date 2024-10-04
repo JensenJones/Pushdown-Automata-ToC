@@ -56,6 +56,34 @@ class ParsingTable {
                 new Pair<>(TreeNode.Label.decl, null),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.SEMICOLON)));
 
+        parsingTable.put(new Pair<>(TreeNode.Label.whilestat, Token.TokenType.WHILE), Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.WHILE),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
+                new Pair<>(TreeNode.Label.relexpr, null),
+                new Pair<>(TreeNode.Label.boolexpr, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
+                new Pair<>(TreeNode.Label.los, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE)));
+
+        parsingTable.put(new Pair<>(TreeNode.Label.forstat, Token.TokenType.FOR), Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.FOR),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
+                new Pair<>(TreeNode.Label.forstart, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.SEMICOLON),
+                new Pair<>(TreeNode.Label.relexpr, null),
+                new Pair<>(TreeNode.Label.boolexpr, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.SEMICOLON),
+                new Pair<>(TreeNode.Label.forarith, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
+                new Pair<>(TreeNode.Label.los, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE)));
+
+        parsingTable.put(new Pair<>(TreeNode.Label.forstart, Token.TokenType.TYPE), Collections.singletonList(new Pair<>(
+                TreeNode.Label.decl, null)));
+        parsingTable.put(new Pair<>(TreeNode.Label.forstart, Token.TokenType.ID), Collections.singletonList(new Pair<>(
+                TreeNode.Label.assign, null)));
     }
 
     public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
