@@ -84,6 +84,8 @@ class ParsingTable {
                 TreeNode.Label.decl, null)));
         parsingTable.put(new Pair<>(TreeNode.Label.forstart, Token.TokenType.ID), Collections.singletonList(new Pair<>(
                 TreeNode.Label.assign, null)));
+        parsingTable.put(new Pair<>(TreeNode.Label.forstart, Token.TokenType.SEMICOLON), Collections.singletonList(new Pair<>(
+                TreeNode.Label.epsilon, null)));
     }
 
     public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
