@@ -155,6 +155,67 @@ class ParsingTable {
         List<Pair<Symbol,Token.TokenType>> possifRuelB = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
         parsingTable.put(new Pair<>(TreeNode.Label.possif, Token.TokenType.LBRACE), possifRuelB);
 
+        List<Pair<Symbol, Token.TokenType>> assignRuleA = Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL),
+                new Pair<>(TreeNode.Label.expr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.assign, Token.TokenType.ID), assignRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> declRuleA = Arrays.asList(
+                new Pair<>(TreeNode.Label.type, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID),
+                new Pair<>(TreeNode.Label.possassign, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.decl, Token.TokenType.TYPE), declRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> possAssignRuleA = Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.ASSIGN),
+                new Pair<>(TreeNode.Label.expr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.possassign, Token.TokenType.ASSIGN), possAssignRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> possAssignRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.possassign, Token.TokenType.SEMICOLON), possAssignRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> printRuleA = Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.PRINT),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
+                new Pair<>(TreeNode.Label.print, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE));
+        parsingTable.put(new Pair<>(TreeNode.Label.print, Token.TokenType.PRINT), printRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> typeRuleA = Collections.singletonList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.TYPE)
+        );
+        parsingTable.put(new Pair<>(TreeNode.Label.type, Token.TokenType.TYPE), typeRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> exprRuleA = Arrays.asList(
+                new Pair<>(TreeNode.Label.relexpr,null),
+                new Pair<>(TreeNode.Label.boolexpr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM), exprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID), exprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE), exprRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> exprRuleB = Arrays.asList(new Pair<>(TreeNode.Label.charexpr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.SQUOTE), exprRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> charexprRuleA = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.SQUOTE),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.CHARLIT),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.SQUOTE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.SQUOTE), charexprRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> boolexprRuleA = Arrays.asList(new Pair<>(TreeNode.Label.boolop, null),
+                new Pair<>(TreeNode.Label.relexpr, null),
+                new Pair<>(TreeNode.Label.boolexpr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL), boolexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NEQUAL), boolexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.AND), boolexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.OR), boolexprRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> boolexprRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE), boolexprRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.SEMICOLON), boolexprRuleB);
+
+
+
     }
 
     public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
