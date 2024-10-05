@@ -214,7 +214,128 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE), boolexprRuleB);
         parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.SEMICOLON), boolexprRuleB);
 
+        List<Pair<Symbol, Token.TokenType>> boolopRuleA = Collections.singletonList( new Pair<>(TreeNode.Label.booleq, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL), boolopRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NEQUAL), boolopRuleA);
 
+        List<Pair<Symbol, Token.TokenType>> boolopRuleB = Collections.singletonList( new Pair<>(TreeNode.Label.boollog, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.AND), boolopRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.OR), boolopRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> booleqRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL), booleqRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> booleqRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NEQUAL));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NEQUAL), booleqRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> boollogRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.EQUAL), booleqRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> boollogRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NEQUAL));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NEQUAL), booleqRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> relexprRuleA = Arrays.asList(new Pair<>(TreeNode.Label.arithexpr, null),
+                new Pair<>(TreeNode.Label.relexprprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE), relexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID), relexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM), relexprRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> relexprRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.TRUE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.TRUE), relexprRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> relexprRuleC = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.FALSE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.FALSE), relexprRuleC);
+
+        List<Pair<Symbol, Token.TokenType>> relexprprimeRuleA = Arrays.asList(new Pair<>(TreeNode.Label.relop, null),
+                new Pair<>(TreeNode.Label.arithexpr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.GT), relexprprimeRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LT), relexprprimeRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.GE), relexprprimeRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LE), relexprprimeRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> relexprprimeRuleB = Arrays.asList(new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE), relexprprimeRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.SEMICOLON), relexprprimeRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> relopRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LT));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LT), relopRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> relopRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.GT));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.GT), relopRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> relopRuleC = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.GE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.GE), relopRuleC);
+
+        List<Pair<Symbol, Token.TokenType>> relopRuleD = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LE), relopRuleD);
+
+        List<Pair<Symbol, Token.TokenType>> arthiexprRuleA = Arrays.asList(new Pair<>(TreeNode.Label.term, null),
+                new Pair<>(TreeNode.Label.arithexprprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE), arthiexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID), arthiexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM), arthiexprRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> arithexprprimeRuleA = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.PLUS),
+                new Pair<>(TreeNode.Label.term, null),
+                new Pair<>(TreeNode.Label.arithexprprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.PLUS), arithexprprimeRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> arithexprprimeRuleB = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.MINUS),
+                new Pair<>(TreeNode.Label.term, null),
+                new Pair<>(TreeNode.Label.arithexprprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.MINUS), arithexprprimeRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> arithexprprimeRuleC = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.DOLLAR), arithexprprimeRuleC);
+
+        List<Pair<Symbol, Token.TokenType>> termRuleA = Arrays.asList(new Pair<>(TreeNode.Label.factor, null),
+                new Pair<>(TreeNode.Label.termprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE), termRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID), termRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM), termRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> termprimeRuleA = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.TIMES),
+                new Pair<>(TreeNode.Label.factor, null),
+                new Pair<>(TreeNode.Label.termprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.TIMES), termprimeRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> termprimeRuleB = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.DIVIDE),
+                new Pair<>(TreeNode.Label.factor, null),
+                new Pair<>(TreeNode.Label.termprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.DIVIDE), termprimeRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> termprimeRuleC = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.MOD),
+                new Pair<>(TreeNode.Label.factor, null),
+                new Pair<>(TreeNode.Label.termprime, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.MOD), termprimeRuleC);
+
+        List<Pair<Symbol, Token.TokenType>> termprimeRuleD = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.PLUS), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.MINUS), termprimeRuleD);
+
+        List<Pair<Symbol, Token.TokenType>> factorRuleA = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
+                new Pair<>(TreeNode.Label.arithexpr, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE), factorRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> factorRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID), factorRuleB);
+
+        List<Pair<Symbol, Token.TokenType>> factorRuleC = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM), factorRuleC);
+
+        List<Pair<Symbol, Token.TokenType>> printexprRuleA = Arrays.asList(new Pair<>(TreeNode.Label.relexpr, null),
+                new Pair<>(TreeNode.Label.boolexpr, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE), printexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.ID), printexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.NUM), printexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.TRUE), printexprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.FALSE), printexprRuleA);
+
+        List<Pair<Symbol, Token.TokenType>> printexprRuleB = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.DQUOTE),
+                new Pair<>(TreeNode.Label.boolexpr, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.DQUOTE));
+        parsingTable.put(new Pair<>(TreeNode.Label.terminal, Token.TokenType.DQUOTE), printexprRuleB);
 
     }
 
