@@ -128,6 +128,11 @@ class ParsingTable {
                 new Pair<>(TreeNode.Label.elseifstat, null));
         parsingTable.put(new Pair<>(TreeNode.Label.ifstat, Token.TokenType.IF), ifRuleA);
 
+        List<Pair<Symbol, Token.TokenType>> elseIfToElseRule = Arrays.asList(
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.ELSE),
+                new Pair<>(TreeNode.Label.possif, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.elseorelseif, Token.TokenType.ELSE), elseIfToElseRule);
+
         List<Pair<Symbol, Token.TokenType>> elseorelseifRuleA = Arrays.asList(
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.ELSE),
                 new Pair<>(TreeNode.Label.possif, null));
@@ -135,7 +140,7 @@ class ParsingTable {
 
         List<Pair<Symbol, Token.TokenType>> possIfRuleA = Arrays.asList(
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.IF),
-                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
+                new Pair<>(TreeNode     .Label.terminal, Token.TokenType.LPAREN),
                 new Pair<>(TreeNode.Label.relexpr, null),
                 new Pair<>(TreeNode.Label.boolexpr, null),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN));
