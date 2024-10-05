@@ -116,6 +116,16 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.TYPE), elseIfRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.SEMICOLON), elseIfRuleA);
 
+        List<Pair<Symbol, Token.TokenType>> elseIfRuleB = Arrays.asList(
+                new Pair<>(TreeNode.Label.elseorelseif, Token.TokenType.ELSE),
+                new Pair<>(TreeNode.Label.possif, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
+                new Pair<>(TreeNode.Label.los, null),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE),
+                new Pair<>(TreeNode.Label.elseifstat, null)
+        );
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.ELSE), elseIfRuleB);
+
         List<Pair<Symbol, Token.TokenType>> ifRuleA = Arrays.asList(
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.IF),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
@@ -140,13 +150,12 @@ class ParsingTable {
 
         List<Pair<Symbol, Token.TokenType>> possIfRuleA = Arrays.asList(
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.IF),
-                new Pair<>(TreeNode     .Label.terminal, Token.TokenType.LPAREN),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
                 new Pair<>(TreeNode.Label.relexpr, null),
                 new Pair<>(TreeNode.Label.boolexpr, null),
-                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN));
-
-
-
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN),
+                new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.possif, Token.TokenType.IF), possIfRuleA);
 
 
     }
