@@ -13,11 +13,11 @@ public class SyntacticAnalyser {
 		int position = 0;
 
 		while (!stack.isEmpty() && position < tokens.size()) {
-			Pair<Symbol, TreeNode> topOfStack = stack.pop();
+            position += determineAction(tokens.get(position), stack.pop(), tree, parsingTable, stack);
+		}
 
-			determineAction(tokens.get(position), topOfStack, tree, parsingTable, stack);
-
-			position++;
+		if (tree.getRoot() == null || !stack.isEmpty()) {
+			throw new SyntaxException("Syntax Error");
 		}
 
 		return tree;
@@ -31,11 +31,18 @@ public class SyntacticAnalyser {
 		}
 	}
 
-	private static void determineAction(Token currentToken,
-                                        Pair<Symbol, TreeNode> topOfStack,
-                                        ParseTree tree,
-                                        ParsingTable parsingTable,
-                                        Deque<Pair<Symbol, TreeNode>> stack) throws Error{
+	private static Symbol getSymbol(Pair<Symbol, Token.TokenType> current) {
+		if (current.snd() == null) {
+			return current.fst();
+		}
+		return current.snd();
+	}
+
+	private static int determineAction(Token currentToken,
+										Pair<Symbol, TreeNode> topOfStack,
+										ParseTree tree,
+										ParsingTable parsingTable,
+										Deque<Pair<Symbol, TreeNode>> stack) throws SyntaxException {
 		TreeNode newNode = new TreeNode(getLabel(topOfStack.fst()), currentToken, topOfStack.snd());
 
 		if (topOfStack.snd() == null){
@@ -43,32 +50,26 @@ public class SyntacticAnalyser {
 		} else {
 			topOfStack.snd().addChild(newNode);
 		}
-		if (topOfStack.fst().equals(TreeNode.Label.terminal)) {
+		if (topOfStack.fst() instanceof Token.TokenType) {
 			if (topOfStack.fst() != currentToken.getType()) {
-				System.out.println("Top of stack = " + topOfStack.fst()); // for debugging
-				System.out.println("Current input token = " + currentToken.getType()); // for debugging
+				throw new SyntaxException("Syntax Exception");
 			}
+			return 1;
 		} else {
 			List<Pair<Symbol, Token.TokenType>> producedRule = parsingTable.applyRule(new Pair<>(topOfStack.fst(), currentToken.getType()));
 			if (producedRule == null) {
-				System.out.println("Produced empty rule for:" + topOfStack.fst() + currentToken.getType()); // for debugging
-				return;
+				System.out.println("DEBUGGING NULL RULE PRODUCED:");
+				System.out.println("Rule: " + topOfStack.fst() + " --> " + currentToken.getType() + " = NULL");
+				throw new SyntaxException("Syntax Exception");
 			}
 
 			ListIterator<Pair<Symbol, Token.TokenType>> iterator = producedRule.listIterator(producedRule.size());
 			while (iterator.hasPrevious()) {
 				Pair<Symbol, Token.TokenType> current = iterator.previous();
-				TreeNode newNodeChild = new TreeNode(getLabel(current.fst()), new Token(current.snd()), newNode);
 				stack.push(new Pair<>(getSymbol(current), newNode));
 			}
+			return 0;
 		}
-	}
-
-	private static Symbol getSymbol(Pair<Symbol, Token.TokenType> current) {
-		if (current.snd() == null) {
-			return current.fst();
-		}
-		return current.snd();
 	}
 }
 
