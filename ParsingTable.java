@@ -19,6 +19,7 @@ class ParsingTable {
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.STRINGARR),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.ARGS),
+                new Pair<>(TreeNode.Label.terminal, Token.TokenType.RPAREN),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
                 new Pair<>(TreeNode.Label.los, null),  // Non-terminal with no TokenType
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE),
@@ -193,6 +194,8 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.NUM), exprRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.ID), exprRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.LBRACE), exprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.TRUE), exprRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.FALSE), exprRuleA);
 
         List<Pair<Symbol, Token.TokenType>> exprRuleB = Arrays.asList(new Pair<>(TreeNode.Label.charexpr, null));
         parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.SQUOTE), exprRuleB);
@@ -256,6 +259,10 @@ class ParsingTable {
         List<Pair<Symbol, Token.TokenType>> relexprprimeRuleB = Arrays.asList(new Pair<>(TreeNode.Label.epsilon, null));
         parsingTable.put(new Pair<>(TreeNode.Label.relexprprime, Token.TokenType.RBRACE), relexprprimeRuleB);
         parsingTable.put(new Pair<>(TreeNode.Label.relexprprime, Token.TokenType.SEMICOLON), relexprprimeRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.relexprprime, Token.TokenType.EQUAL), relexprprimeRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.relexprprime, Token.TokenType.NEQUAL), relexprprimeRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.relexprprime, Token.TokenType.AND), relexprprimeRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.relexprprime, Token.TokenType.OR), relexprprimeRuleB);
 
         List<Pair<Symbol, Token.TokenType>> relopRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LT));
         parsingTable.put(new Pair<>(TreeNode.Label.relop, Token.TokenType.LT), relopRuleA);
@@ -285,6 +292,20 @@ class ParsingTable {
                 new Pair<>(TreeNode.Label.arithexprprime, null));
         parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.MINUS), arithexprprimeRuleB);
 
+        List<Pair<Symbol, Token.TokenType>> arithexprprimeRuleC = Collections.singletonList(
+                new Pair<>(TreeNode.Label.epsilon, null));
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.EQUAL), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.NEQUAL), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.LT), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.LE), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.GT), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.GE), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.RPAREN), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.AND), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.OR), arithexprprimeRuleC);
+        parsingTable.put(new Pair<>(TreeNode.Label.arithexprprime, Token.TokenType.SEMICOLON), arithexprprimeRuleC);
+
+
         List<Pair<Symbol, Token.TokenType>> termRuleA = Arrays.asList(new Pair<>(TreeNode.Label.factor, null),
                 new Pair<>(TreeNode.Label.termprime, null));
         parsingTable.put(new Pair<>(TreeNode.Label.term, Token.TokenType.LBRACE), termRuleA);
@@ -309,6 +330,16 @@ class ParsingTable {
         List<Pair<Symbol, Token.TokenType>> termprimeRuleD = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
         parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.PLUS), termprimeRuleD);
         parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.MINUS), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.EQUAL), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.NEQUAL), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.GT), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.GE), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.LT), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.LE), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.RPAREN), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.AND), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.OR), termprimeRuleD);
+        parsingTable.put(new Pair<>(TreeNode.Label.termprime, Token.TokenType.SEMICOLON), termprimeRuleD);
 
         List<Pair<Symbol, Token.TokenType>> factorRuleA = Arrays.asList(new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
                 new Pair<>(TreeNode.Label.arithexpr, null),

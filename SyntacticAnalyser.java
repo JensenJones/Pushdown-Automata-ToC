@@ -31,11 +31,11 @@ public class SyntacticAnalyser {
 		}
 	}
 
-	private static Symbol getSymbol(Pair<Symbol, Token.TokenType> current) {
-		if (current.snd() == null) {
-			return current.fst();
+	private static Symbol getSymbol(Pair<Symbol, Token.TokenType> pair) {
+		if (pair.snd() != null) {
+			return pair.snd();
 		}
-		return current.snd();
+		return pair.fst();
 	}
 
 	private static int determineAction(Token currentToken,
@@ -50,23 +50,38 @@ public class SyntacticAnalyser {
 		} else {
 			topOfStack.snd().addChild(newNode);
 		}
+
 		if (topOfStack.fst() instanceof Token.TokenType) {
 			if (topOfStack.fst() != currentToken.getType()) {
+				System.out.println("DEBUG: Top of stack terminal doesn't match input:");
+				System.out.println("Top of stack = " + topOfStack.fst() + ", Input = " + currentToken.getType());
 				throw new SyntaxException("Syntax Exception");
 			}
 			return 1;
 		} else {
 			List<Pair<Symbol, Token.TokenType>> producedRule = parsingTable.applyRule(new Pair<>(topOfStack.fst(), currentToken.getType()));
+			System.out.println("----------------DEBUG------------------");
+			System.out.println("Rule applied on top of stack: " + topOfStack.fst());
+			System.out.println("               current input: " + currentToken.getType());
+//			System.out.println("Rule produced = " + producedRule);
+			System.out.println("----------------DEBUG------------------");
+
 			if (producedRule == null) {
-				System.out.println("DEBUGGING NULL RULE PRODUCED:");
-				System.out.println("Rule: " + topOfStack.fst() + " --> " + currentToken.getType() + " = NULL");
+//				System.out.println("DEBUGGING NULL RULE PRODUCED:");
+//				System.out.println("Rule: " + topOfStack.fst() + " --> " + currentToken.getType() + " = NULL");
 				throw new SyntaxException("Syntax Exception");
+			}
+
+			if (producedRule.get(0).fst() == TreeNode.Label.epsilon) {
+				return 0;
 			}
 
 			ListIterator<Pair<Symbol, Token.TokenType>> iterator = producedRule.listIterator(producedRule.size());
 			while (iterator.hasPrevious()) {
 				Pair<Symbol, Token.TokenType> current = iterator.previous();
-				stack.push(new Pair<>(getSymbol(current), newNode));
+				Pair<Symbol, TreeNode> newStackPair = new Pair<>(getSymbol(current), newNode);
+				System.out.println("DEBUG pushing to the stack: " + newStackPair);
+				stack.push(newStackPair);
 			}
 			return 0;
 		}
