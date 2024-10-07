@@ -4,7 +4,7 @@ public class Runner {
 
 	public static void main(String[] args) {
 		try {
-			List<Token> results = LexicalAnalyser.analyse("public class Test { public static void main(String[] args){ }}");
+			List<Token> results = LexicalAnalyser.analyse("public class Test { public static void main(String[] args){ if (true) {System.out.println(\"true\");} else { System.out.println(\"false\"); }}}");
 			System.out.println(results);
 			ParseTree tree = SyntacticAnalyser.parse(results);
 			System.out.println(tree);
