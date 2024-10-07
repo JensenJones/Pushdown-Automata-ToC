@@ -153,7 +153,7 @@ class ParsingTable {
                 new Pair<>(TreeNode.Label.epsilon, null));
         parsingTable.put(new Pair<>(TreeNode.Label.possif, Token.TokenType.IF), possIfRuleA);
 
-        List<Pair<Symbol,Token.TokenType>> possifRuelB = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
+        List<Pair<Symbol, Token.TokenType>> possifRuelB = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
         parsingTable.put(new Pair<>(TreeNode.Label.possif, Token.TokenType.LBRACE), possifRuelB);
 
         List<Pair<Symbol, Token.TokenType>> assignRuleA = Arrays.asList(
@@ -189,7 +189,7 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.type, Token.TokenType.TYPE), typeRuleA);
 
         List<Pair<Symbol, Token.TokenType>> exprRuleA = Arrays.asList(
-                new Pair<>(TreeNode.Label.relexpr,null),
+                new Pair<>(TreeNode.Label.relexpr, null),
                 new Pair<>(TreeNode.Label.boolexpr, null));
         parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.NUM), exprRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.expr, Token.TokenType.ID), exprRuleA);
@@ -214,14 +214,14 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.boolexpr, Token.TokenType.OR), boolexprRuleA);
 
         List<Pair<Symbol, Token.TokenType>> boolexprRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.epsilon, null));
-        parsingTable.put(new Pair<>(TreeNode.Label.boolexpr, Token.TokenType.RBRACE), boolexprRuleB);
+        parsingTable.put(new Pair<>(TreeNode.Label.boolexpr, Token.TokenType.RPAREN), boolexprRuleB);
         parsingTable.put(new Pair<>(TreeNode.Label.boolexpr, Token.TokenType.SEMICOLON), boolexprRuleB);
 
-        List<Pair<Symbol, Token.TokenType>> boolopRuleA = Collections.singletonList( new Pair<>(TreeNode.Label.booleq, null));
+        List<Pair<Symbol, Token.TokenType>> boolopRuleA = Collections.singletonList(new Pair<>(TreeNode.Label.booleq, null));
         parsingTable.put(new Pair<>(TreeNode.Label.boolop, Token.TokenType.EQUAL), boolopRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.boolop, Token.TokenType.NEQUAL), boolopRuleA);
 
-        List<Pair<Symbol, Token.TokenType>> boolopRuleB = Collections.singletonList( new Pair<>(TreeNode.Label.boollog, null));
+        List<Pair<Symbol, Token.TokenType>> boolopRuleB = Collections.singletonList(new Pair<>(TreeNode.Label.boollog, null));
         parsingTable.put(new Pair<>(TreeNode.Label.boolop, Token.TokenType.AND), boolopRuleB);
         parsingTable.put(new Pair<>(TreeNode.Label.boolop, Token.TokenType.OR), boolopRuleB);
 
@@ -367,8 +367,5 @@ class ParsingTable {
 
 
     }
-
-    public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
-        return parsingTable.get(key);
-    }
 }
+
