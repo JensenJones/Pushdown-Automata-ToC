@@ -347,8 +347,7 @@ public class SyntacticalAnalysisTests {
 		TreeNode elseNode = ifNode.getChildren().get(8);
 		assertEquals(TreeNode.Label.elseifstat, elseNode.getLabel());
 		assertEquals(5, elseNode.getChildren().size());
-		assertEquals(Token.TokenType.ELSE,
-				elseNode.getChildren().get(0).getChildren().get(0).getToken().get().getType());
+		assertEquals(Token.TokenType.ELSE, elseNode.getChildren().get(0).getChildren().get(0).getToken().get().getType());
 		assertEquals(Token.TokenType.LBRACE, elseNode.getChildren().get(1).getToken().get().getType());
 		assertEquals(Token.TokenType.RBRACE, elseNode.getChildren().get(3).getToken().get().getType());
 		assertEquals(TreeNode.Label.epsilon, elseNode.getChildren().get(4).getChildren().get(0).getLabel());

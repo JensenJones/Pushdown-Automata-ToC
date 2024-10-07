@@ -98,7 +98,7 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.forarith, Token.TokenType.RPAREN), Collections.singletonList(
                 new Pair<>(TreeNode.Label.epsilon, null)));
 
-
+        //<<if>> → if ( <<rel expr>> <<bool expr>> ) { <<los>> } <<else if>>
         parsingTable.put(new Pair<>(TreeNode.Label.ifstat, Token.TokenType.IF), Arrays.asList(
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.IF),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.LPAREN),
@@ -119,9 +119,10 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.PRINT), elseIfRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.TYPE), elseIfRuleA);
         parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.SEMICOLON), elseIfRuleA);
+        parsingTable.put(new Pair<>(TreeNode.Label.elseifstat, Token.TokenType.RBRACE), elseIfRuleA);
 
         List<Pair<Symbol, Token.TokenType>> elseIfRuleB = Arrays.asList(
-                new Pair<>(TreeNode.Label.elseorelseif, Token.TokenType.ELSE),
+                new Pair<>(TreeNode.Label.elseorelseif, null),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.LBRACE),
                 new Pair<>(TreeNode.Label.los, null),
                 new Pair<>(TreeNode.Label.terminal, Token.TokenType.RBRACE),
