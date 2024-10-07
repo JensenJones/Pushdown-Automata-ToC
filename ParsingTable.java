@@ -366,6 +366,11 @@ class ParsingTable {
         parsingTable.put(new Pair<>(TreeNode.Label.printexpr, Token.TokenType.DQUOTE), printexprRuleB);
 
 
+
     }
+    public List<Pair<Symbol, Token.TokenType>> applyRule(Pair<Symbol, Token.TokenType> key) {
+        return parsingTable.get(key);
+    }
+
 }
 
