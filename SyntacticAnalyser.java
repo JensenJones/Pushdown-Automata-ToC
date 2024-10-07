@@ -60,11 +60,11 @@ public class SyntacticAnalyser {
 			return 1;
 		} else {
 			List<Pair<Symbol, Token.TokenType>> producedRule = parsingTable.applyRule(new Pair<>(topOfStack.fst(), currentToken.getType()));
-			System.out.println("----------------DEBUG------------------");
-			System.out.println("Rule applied on top of stack: " + topOfStack.fst());
-			System.out.println("               current input: " + currentToken.getType());
-//			System.out.println("Rule produced = " + producedRule);
-			System.out.println("----------------DEBUG------------------");
+//			System.out.println("----------------DEBUG------------------");
+//			System.out.println("Rule applied on top of stack: " + topOfStack.fst());
+//			System.out.println("               current input: " + currentToken.getType());
+////			System.out.println("Rule produced = " + producedRule);
+//			System.out.println("----------------DEBUG------------------");
 
 			if (producedRule == null) {
 //				System.out.println("DEBUGGING NULL RULE PRODUCED:");
@@ -80,7 +80,7 @@ public class SyntacticAnalyser {
 			while (iterator.hasPrevious()) {
 				Pair<Symbol, Token.TokenType> current = iterator.previous();
 				Pair<Symbol, TreeNode> newStackPair = new Pair<>(getSymbol(current), newNode);
-				System.out.println("DEBUG pushing to the stack: " + newStackPair);
+//				System.out.println("DEBUG pushing to the stack: " + newStackPair);
 				stack.push(newStackPair);
 			}
 			return 0;
